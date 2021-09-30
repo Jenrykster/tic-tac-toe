@@ -4,12 +4,18 @@ let displayManager = (function(){
     let _boardData;
     let _xTextElement;
     let _oTextElement;
+    let _lastTurn = "x";
 
     let _changeBoard = (event) =>{
         let index = event.target.dataset.index;
-        _boardData[index] = "x";
-        draw();
-        console.log(index);
+        if(_lastTurn == "x"){
+            _boardData[index] = "o";
+            _lastTurn = "o";
+        }else{
+            _boardData[index] = "x";
+            _lastTurn = "x";
+        }
+        _draw();
     }
     let init = (boardData) =>{
         _elementBoard = document.querySelector('#game-board');
@@ -22,18 +28,17 @@ let displayManager = (function(){
         _boardData = boardData;
         for (let square of _boardSquares) {
             square.addEventListener('click', _changeBoard);
-        } 
+        }
+        _draw(); 
     };
-    let draw = () =>{
+    let _draw = () =>{
         for(let i = 0;i<9;i++){
-            if(_boardSquares[i].firstChild != null){
-                console.log(_boardSquares[i].firstChild);
-                _boardSquares[i].removeChild(_boardSquares[i].firstChild);
-            }
-            if(_boardData[i] == "x"){
-                _boardSquares[i].appendChild(_xTextElement.cloneNode(true));
-            }else{
-                _boardSquares[i].appendChild(_oTextElement.cloneNode(true));
+            if(_boardSquares[i].firstChild == null){
+                if(_boardData[i] == "x"){
+                    _boardSquares[i].appendChild(_xTextElement.cloneNode(true));
+                }else if(_boardData[i] == "o"){
+                    _boardSquares[i].appendChild(_oTextElement.cloneNode(true));
+                }
             }
         }
     };
@@ -41,16 +46,14 @@ let displayManager = (function(){
 
     }
     return {
-        init,
-        draw
+        init
     };
 })();
 let gameBoard = (function(){
-    let board = ["x","o","x","o","o","o","x","x","x"];
+    let board = ["","","","","","","","",""]; // Array with empty strings to not mess order of elements
     return {
         board
     }
 })();
 
 displayManager.init(gameBoard.board);
-displayManager.draw();
