@@ -21,6 +21,9 @@ h1{
     height: 50px;
     border: 2px black solid;
 }
+.square p{
+    pointer-events: none;   
+}
 .white{
     background-color: snow;
 }
