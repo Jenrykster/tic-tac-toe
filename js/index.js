@@ -56,4 +56,13 @@ let gameBoard = (function(){
     }
 })();
 
+const playerFactory = (name, ticChoice) => {  //TicChoice is either X or O
+    return {
+        name,
+        ticChoice
+    }
+}
+
+let player1 = playerFactory('Jenryk', 'x');
+let player2 = playerFactory('NotJenryk', 'o');
 displayManager.init(gameBoard.board);
