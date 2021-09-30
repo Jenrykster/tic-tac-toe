@@ -22,7 +22,8 @@ h1{
     border: 2px black solid;
 }
 .square p{
-    pointer-events: none;   
+    pointer-events: none; 
+    user-select: none;   
 }
 .white{
     background-color: snow;
