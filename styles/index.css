@@ -1,0 +1,28 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #232323;
+    text-align: center;
+    flex-direction: column;
+}
+h1{
+    text-align: center;
+    color: snow;
+}
+#game-board{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+.square{
+    width: 50px;
+    height: 50px;
+    border: 2px black solid;
+}
+.white{
+    background-color: snow;
+}
+.color{
+    background-color: greenyellow;
+}
