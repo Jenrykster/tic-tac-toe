@@ -4,6 +4,10 @@ let gameManager = (function(){
 
     const changeBoard = (event) =>{
         let index = event.target.dataset.index;
+        if(event.target.firstChild != null){
+            console.log("OPA");
+            return;
+        }
         if(_lastTurn == "x"){
             _boardData[index] = "o";
             _lastTurn = "o";
