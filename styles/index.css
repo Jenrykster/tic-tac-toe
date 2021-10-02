@@ -48,6 +48,7 @@ h1{
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     font-family: cursive;
+    color: black;
 }
 #start-button{
     margin-top: 10px;
