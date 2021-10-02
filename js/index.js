@@ -1,10 +1,14 @@
 let gameManager = (function(){
     let _boardData;
-    let _lastTurn = "x";
+    let _lastTurn;
+    let _actualTurn;
     let _gameOver = false;
 
-    const setGameOver = (bool) =>{
-        _gameOver = bool;
+    const setGameOver = (isGameOver) =>{
+        _gameOver = isGameOver;
+        if(isGameOver){
+            console.log("Winner: ", _actualTurn.name);
+        }
     }
     const changeBoard = (event) =>{
         if(!_gameOver){
@@ -12,21 +16,23 @@ let gameManager = (function(){
             if(event.target.firstChild != null){
                 return;
             }
-            if(_lastTurn == "x"){
-                _boardData[index] = "o";
-                _lastTurn = "o";
+            if(_lastTurn == player1){
+                _boardData[index] = player2.choice;
+                _lastTurn = player2;
             }else{
-                _boardData[index] = "x";
-                _lastTurn = "x";
+                _boardData[index] = player1.choice;
+                _lastTurn = player1;
             }
-            displayManager.draw(_boardData);
-            console.log("Win: ", gameBoard.checkWinCond());
-            setGameOver(gameBoard.checkWinCond());
+            displayManager.draw(_boardData);   
+            setGameOver(gameBoard.checkWinCond());   
+        }else{
+            console.log("Winner: ", _actualTurn.name);
         }
     }
-    const init = (boardData) =>{
+    const init = (boardData, player1, player2) =>{
         _boardData = boardData;
-        
+        _lastTurn = player2;
+        _actualTurn = player1;
         displayManager.init();
         displayManager.draw(_boardData); 
     };
@@ -106,14 +112,14 @@ let displayManager = (function(){
     }
 })();
 
-const playerFactory = (name, ticChoice) => {  //TicChoice is either X or O
+const playerFactory = (name, choice) => {  //TicChoice is either X or O
     return {
         name,
-        ticChoice
+        choice
     }
 }
 
 let player1 = playerFactory('Jenryk', 'x');
 let player2 = playerFactory('NotJenryk', 'o');
 
-gameManager.init(gameBoard.board);
+gameManager.init(gameBoard.board, player1, player2);
