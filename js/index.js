@@ -3,6 +3,8 @@ let gameManager = (function(){
     let _lastTurn;
     let _actualTurn;
     let _gameOver = false;
+    let _player1;
+    let _player2;
 
     const setGameOver = (isGameOver) =>{
         _gameOver = isGameOver;
@@ -16,12 +18,12 @@ let gameManager = (function(){
             if(event.target.firstChild != null){
                 return;
             }
-            if(_lastTurn == player1){
-                _boardData[index] = player2.choice;
-                _lastTurn = player2;
+            if(_lastTurn == _player1){
+                _boardData[index] = _player2.choice;
+                _lastTurn = _player2;
             }else{
-                _boardData[index] = player1.choice;
-                _lastTurn = player1;
+                _boardData[index] = _player1.choice;
+                _lastTurn = _player1;
             }
             displayManager.draw(_boardData);   
             setGameOver(gameBoard.checkWinCond());   
@@ -31,10 +33,13 @@ let gameManager = (function(){
         }
     }
     const init = (boardData, player1, player2) =>{
+        console.log(player1, player2)
+        _player1 = player1;
+        _player2 = player2;
         _boardData = boardData;
-        _lastTurn = player2;
-        _actualTurn = player1;
-        displayManager.init();
+        _lastTurn = _player2;
+        _actualTurn = _player1;
+        displayManager.init(_player1.choice, _player2.choice);
         displayManager.draw(_boardData); 
     };
     return {
@@ -82,19 +87,22 @@ let gameBoard = (function(){
 let displayManager = (function(){
     let _elementBoard;
     let _boardSquares;
+    let _xText;
+    let _oText;
     let _xTextElement;
     let _oTextElement;
-
     let _gameOverDivElement;
 
-    const init = () =>{
+    const init = (choice1, choice2) =>{
         _gameOverDivElement = document.querySelector('#game-over-text');
         _elementBoard = document.querySelector('#game-board');
         _boardSquares = _elementBoard.children;
+        _xText = choice1;
+        _oText = choice2;
         _xTextElement =  document.createElement('p');
-        _xTextElement.innerHTML = "X";
+        _xTextElement.innerHTML = _xText;
         _oTextElement =  document.createElement('p');
-        _oTextElement.innerHTML = "O";
+        _oTextElement.innerHTML = _oText;
         for (let square of _boardSquares) {
             square.addEventListener('click', gameManager.changeBoard);
         }
@@ -102,9 +110,9 @@ let displayManager = (function(){
     const draw = (_boardData) =>{
         for(let i = 0;i<9;i++){
             if(_boardSquares[i].firstChild == null){
-                if(_boardData[i] == "x"){
+                if(_boardData[i] == _xText){
                     _boardSquares[i].appendChild(_xTextElement.cloneNode(true));
-                }else if(_boardData[i] == "o"){
+                }else if(_boardData[i] == _oText){
                     _boardSquares[i].appendChild(_oTextElement.cloneNode(true));
                 }
             }
@@ -120,15 +128,37 @@ let displayManager = (function(){
         displayGameOver
     }
 })();
+const playerManager = (function(){
+    let _player1Data;
+    let _player2Data;
+    let _pform1;
+    let _pform2;
+    const createPlayers = () =>{
+        _pform1 = document.querySelector('#player-one');
+        _pform2 = document.querySelector('#player-two');
+        _player1Data = Object.fromEntries(new FormData(_pform1).entries());
+        _player2Data = Object.fromEntries(new FormData(_pform2).entries());
+        let player1 = playerFactory(_player1Data.name, _player1Data.choice);
+        let player2 = playerFactory(_player2Data.name2, _player2Data.choice2);
+        return{
+            player1,
+            player2
+        }
+    }
+    return{
+        createPlayers
+    }
+})();
 
 const playerFactory = (name, choice) => {  //TicChoice is either X or O
     return {
         name,
         choice
     }
-}
+};
 
-let player1 = playerFactory('Jenryk', 'x');
-let player2 = playerFactory('NotJenryk', 'o');
-
-gameManager.init(gameBoard.board, player1, player2);
+function startGame(){
+    let players = playerManager.createPlayers();
+    console.log(players)
+    gameManager.init(gameBoard.board, players.player1, players.player2);
+};
