@@ -103,6 +103,7 @@ let displayManager = (function(){
         _xTextElement =  document.createElement('p');
         _xTextElement.innerHTML = _xText;
         _oTextElement =  document.createElement('p');
+        _oTextElement.style.color = 'red';
         _oTextElement.innerHTML = _oText;
         for (let square of _boardSquares) {
             square.addEventListener('click', gameManager.changeBoard);
