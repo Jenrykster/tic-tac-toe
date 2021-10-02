@@ -10,6 +10,33 @@ h1{
     text-align: center;
     color: snow;
 }
+.player-config{
+    margin: 0px 50px 0px 50px;
+}
+.player-config form{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+.player-config input{
+    margin: 10px 0px 10px 0px;
+    width: 100px;
+}
+.icon-choice {
+    width: 20px !important; 
+    margin-left: 20px !important;
+} 
+.player-config label{
+    white-space: nowrap;
+}
+#main-container{
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+}
 #game-over-text{
     text-align: center;
     color: snow;
