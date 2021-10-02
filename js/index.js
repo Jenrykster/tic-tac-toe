@@ -27,6 +27,7 @@ let gameManager = (function(){
             setGameOver(gameBoard.checkWinCond());   
         }else{
             console.log("Winner: ", _actualTurn.name);
+            displayManager.displayGameOver(_actualTurn);
         }
     }
     const init = (boardData, player1, player2) =>{
@@ -84,7 +85,10 @@ let displayManager = (function(){
     let _xTextElement;
     let _oTextElement;
 
+    let _gameOverDivElement;
+
     const init = () =>{
+        _gameOverDivElement = document.querySelector('#game-over-text');
         _elementBoard = document.querySelector('#game-board');
         _boardSquares = _elementBoard.children;
         _xTextElement =  document.createElement('p');
@@ -106,9 +110,14 @@ let displayManager = (function(){
             }
         }
     };
+    const displayGameOver = (winner) => {
+        _gameOverDivElement.children[1].innerHTML = `${winner.name.toUpperCase()} WINS !`;
+        _gameOverDivElement.style.visibility = 'visible';
+    }
     return {
         init,
-        draw
+        draw,
+        displayGameOver
     }
 })();
 

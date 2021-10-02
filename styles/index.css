@@ -13,6 +13,7 @@ h1{
 #game-over-text{
     text-align: center;
     color: snow;
+    visibility: hidden;
 }
 #game-board{
     display: grid;
