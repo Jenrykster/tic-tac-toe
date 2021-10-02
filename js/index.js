@@ -22,6 +22,7 @@ let gameManager = (function(){
             }
             if(_lastTurn == _player1){
                 _boardData[index] = _player2.choice;
+                console.log("BOrdS: ", _boardData[index]);
                 _lastTurn = _player2;
                 _actualTurn = _player1;
             }else{
@@ -33,11 +34,16 @@ let gameManager = (function(){
             setGameOver(gameBoard.checkWinCond());   
         }
     }
-    const init = (boardData, player1, player2) =>{
+    const init = (player1, player2) =>{
         console.log(player1, player2)
+
+        if(_gameOver){
+            _gameOver = false;
+            displayManager.clean();
+        }
         _player1 = player1;
         _player2 = player2;
-        _boardData = boardData;
+        _boardData = gameBoard.reset();
         _lastTurn = _player2;
         _actualTurn = _player1;
         displayManager.init(_player1.choice, _player2.choice);
@@ -46,13 +52,20 @@ let gameManager = (function(){
     return {
         init,
         changeBoard,
-        setGameOver
+        setGameOver,
     };
 })();
 
 let gameBoard = (function(){
-    let board = ["","","","","","","","",""]; // Array with empty strings to not mess order of elements
+    let board;
+
+    const reset = () =>{
+        board = ["","","","","","","","",""];  // Array with empty strings to not mess order of elements
+        console.log("CARALHA", board);
+        return board;
+    }
     const checkWinCond = () => {
+        console.log(board);
         if(board[0] == board[1] && board[1] == board[2] && board[0]!=''){
             return true;
         }
@@ -80,8 +93,9 @@ let gameBoard = (function(){
         return false;
     }
     return {
+        reset,
         board,
-        checkWinCond
+        checkWinCond,
     }
 })();
 
@@ -120,12 +134,21 @@ let displayManager = (function(){
             }
         }
     };
+    const clean = () => {
+        for(let i = 0;i<9;i++){
+            if(_boardSquares[i].firstChild != null){
+                _boardSquares[i].removeChild(_boardSquares[i].firstChild);
+            }
+        }
+        _gameOverDivElement.style.visibility = 'hidden';
+    };
     const displayGameOver = (winner) => {
         _gameOverDivElement.children[1].innerHTML = `${winner.name.toUpperCase()} WINS !`;
         _gameOverDivElement.style.visibility = 'visible';
     }
     return {
         init,
+        clean,
         draw,
         displayGameOver
     }
@@ -161,6 +184,5 @@ const playerFactory = (name, choice) => {  //TicChoice is either X or O
 
 function startGame(){
     let players = playerManager.createPlayers();
-    console.log(players)
-    gameManager.init(gameBoard.board, players.player1, players.player2);
+    gameManager.init( players.player1, players.player2);
 };
