@@ -9,11 +9,13 @@ let gameManager = (function(){
     const setGameOver = (isGameOver) =>{
         _gameOver = isGameOver;
         if(isGameOver){
-            console.log("Winner: ", _actualTurn.name);
+            console.log("Winner: ", _lastTurn.name);
+            displayManager.displayGameOver(_lastTurn);
         }
     }
     const changeBoard = (event) =>{
         if(!_gameOver){
+            console.log(_actualTurn)
             let index = event.target.dataset.index;
             if(event.target.firstChild != null){
                 return;
@@ -21,15 +23,14 @@ let gameManager = (function(){
             if(_lastTurn == _player1){
                 _boardData[index] = _player2.choice;
                 _lastTurn = _player2;
+                _actualTurn = _player1;
             }else{
                 _boardData[index] = _player1.choice;
                 _lastTurn = _player1;
+                _actualTurn = _player2;
             }
             displayManager.draw(_boardData);   
             setGameOver(gameBoard.checkWinCond());   
-        }else{
-            console.log("Winner: ", _actualTurn.name);
-            displayManager.displayGameOver(_actualTurn);
         }
     }
     const init = (boardData, player1, player2) =>{
