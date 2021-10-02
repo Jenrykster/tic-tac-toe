@@ -28,6 +28,11 @@ let gameManager = (function(){
                 _actualTurn = _player2;
             }
             displayManager.draw(_boardData);   
+
+            if(gameBoard.checkTieCond()){
+                setGameOver(true);
+                displayManager.displayGameOver("Tie");
+            }
             setGameOver(gameBoard.checkWinCond());   
         }
     }
@@ -85,10 +90,14 @@ let gameBoard = (function(){
         }
         return false;
     }
+    const checkTieCond = () =>{
+        return !board.some(boardPiece => boardPiece == '');
+    }
     return {
         reset,
         board,
         checkWinCond,
+        checkTieCond
     }
 })();
 
@@ -136,8 +145,13 @@ let displayManager = (function(){
         _gameOverDivElement.style.visibility = 'hidden';
     };
     const displayGameOver = (winner) => {
-        _gameOverDivElement.children[1].innerHTML = `${winner.name.toUpperCase()} WINS !`;
-        _gameOverDivElement.style.visibility = 'visible';
+        if(winner == "Tie"){
+            _gameOverDivElement.children[1].innerHTML = "It's a tie";
+            _gameOverDivElement.style.visibility = 'visible';
+        }else{
+            _gameOverDivElement.children[1].innerHTML = `${winner.name.toUpperCase()} WINS !`;
+            _gameOverDivElement.style.visibility = 'visible';
+        }
     }
     return {
         init,
