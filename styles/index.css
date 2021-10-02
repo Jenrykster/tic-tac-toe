@@ -10,6 +10,10 @@ h1{
     text-align: center;
     color: snow;
 }
+#game-over-text{
+    text-align: center;
+    color: snow;
+}
 #game-board{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
