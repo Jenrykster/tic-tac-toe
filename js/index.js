@@ -1,21 +1,28 @@
 let gameManager = (function(){
     let _boardData;
     let _lastTurn = "x";
+    let _gameOver = false;
 
+    const setGameOver = (bool) =>{
+        _gameOver = bool;
+    }
     const changeBoard = (event) =>{
-        let index = event.target.dataset.index;
-        if(event.target.firstChild != null){
-            return;
+        if(!_gameOver){
+            let index = event.target.dataset.index;
+            if(event.target.firstChild != null){
+                return;
+            }
+            if(_lastTurn == "x"){
+                _boardData[index] = "o";
+                _lastTurn = "o";
+            }else{
+                _boardData[index] = "x";
+                _lastTurn = "x";
+            }
+            displayManager.draw(_boardData);
+            console.log("Win: ", gameBoard.checkWinCond());
+            setGameOver(gameBoard.checkWinCond());
         }
-        if(_lastTurn == "x"){
-            _boardData[index] = "o";
-            _lastTurn = "o";
-        }else{
-            _boardData[index] = "x";
-            _lastTurn = "x";
-        }
-        displayManager.draw(_boardData);
-        console.log("Win: ", gameBoard.checkWinCond());
     }
     const init = (boardData) =>{
         _boardData = boardData;
@@ -26,6 +33,7 @@ let gameManager = (function(){
     return {
         init,
         changeBoard,
+        setGameOver
     };
 })();
 
