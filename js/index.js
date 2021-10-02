@@ -9,20 +9,17 @@ let gameManager = (function(){
     const setGameOver = (isGameOver) =>{
         _gameOver = isGameOver;
         if(isGameOver){
-            console.log("Winner: ", _lastTurn.name);
             displayManager.displayGameOver(_lastTurn);
         }
     }
     const changeBoard = (event) =>{
         if(!_gameOver){
-            console.log(_actualTurn)
             let index = event.target.dataset.index;
             if(event.target.firstChild != null){
                 return;
             }
             if(_lastTurn == _player1){
                 _boardData[index] = _player2.choice;
-                console.log("BOrdS: ", _boardData[index]);
                 _lastTurn = _player2;
                 _actualTurn = _player1;
             }else{
@@ -35,8 +32,6 @@ let gameManager = (function(){
         }
     }
     const init = (player1, player2) =>{
-        console.log(player1, player2)
-
         if(_gameOver){
             _gameOver = false;
             displayManager.clean();
@@ -61,11 +56,9 @@ let gameBoard = (function(){
 
     const reset = () =>{
         board = ["","","","","","","","",""];  // Array with empty strings to not mess order of elements
-        console.log("CARALHA", board);
         return board;
     }
     const checkWinCond = () => {
-        console.log(board);
         if(board[0] == board[1] && board[1] == board[2] && board[0]!=''){
             return true;
         }
