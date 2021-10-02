@@ -9,17 +9,42 @@
 </head>
 <body>
     <h1>Tic Tac Toe</h1>
-    <div id="game-board">
-        <div data-index="0" class="square white"></div>
-        <div data-index="1" class="square color"></div>
-        <div data-index="2" class="square white"></div>
-        <div data-index="3" class="square color"></div>
-        <div data-index="4" class="square white"></div>
-        <div data-index="5" class="square color"></div>
-        <div data-index="6" class="square white"></div>
-        <div data-index="7" class="square color"></div>
-        <div data-index="8" class="square white"></div>
+    <div id="main-container">
+        <div class="player-config">
+            <h2>Player 1</h2>
+            <form id="player-one">
+                <label for="name">
+                    Name <input name="name" id="name" type="text" required>
+                </label>
+                <label for="choice">
+                    Icon Text <input name="choice" class="icon-choice" id="choice" type="text" maxlength="2" required>
+                </label>
+            </form>
+        </div>
+        <div id="game-board">
+            <div data-index="0" class="square white"></div>
+            <div data-index="1" class="square color"></div>
+            <div data-index="2" class="square white"></div>
+            <div data-index="3" class="square color"></div>
+            <div data-index="4" class="square white"></div>
+            <div data-index="5" class="square color"></div>
+            <div data-index="6" class="square white"></div>
+            <div data-index="7" class="square color"></div>
+            <div data-index="8" class="square white"></div>
+        </div>
+        <div class="player-config">
+            <h2>Player 2</h2>
+            <form id="player-two">
+                <label for="name2">
+                    Name <input name="name2" id="name2" type="text" required>
+                </label>
+                <label for="choice2">
+                    Icon Text <input name="choice2" class="icon-choice" id="choice2" type="text" maxlength="2" required>
+                </label>
+            </form>
+        </div>
     </div>
+    <button id="start-button" onclick="startGame()">START</button>
     <div id="game-over-text">
         <h1>GAME OVER</h1>
         <h2>PLAYER WINS</h2>

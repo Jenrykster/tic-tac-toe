@@ -10,15 +10,58 @@ h1{
     text-align: center;
     color: snow;
 }
+.player-config{
+    margin: 0px 50px 0px 50px;
+    user-select: none;
+}
+.player-config form{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+.player-config input{
+    margin: 10px 0px 10px 0px;
+    width: 100px;
+}
+.icon-choice {
+    width: 20px !important; 
+    margin-left: 20px !important;
+} 
+.player-config label{
+    white-space: nowrap;
+}
+#main-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    color: snow;
+}
 #game-over-text{
     text-align: center;
     color: snow;
+    visibility: hidden;
 }
 #game-board{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     font-family: cursive;
+    color: black;
+}
+#start-button{
+    margin-top: 10px;
+    background-color: snow;
+    border: 0;
+    width: 100px;
+    height: 50px;
+}
+#start-button:hover{
+    border: 1px solid black;
+}
+#start-button:active{
+    background-color: lightslategray;
 }
 .square{
     width: 50px;
